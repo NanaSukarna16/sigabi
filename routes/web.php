@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\KategoriMuridController;
 use App\Http\Controllers\AturanPotonganController;
 use App\Http\Controllers\MuridController;
+use App\Http\Controllers\KehadiranController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -26,6 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('kategori-murid', KategoriMuridController::class);
     Route::resource('aturan-potongan', AturanPotonganController::class);
     Route::resource('murid', MuridController::class);
+    Route::resource('kehadiran', KehadiranController::class)->only(['index', 'store']);
 });
 
 require __DIR__.'/settings.php';

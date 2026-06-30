@@ -16,7 +16,7 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Building2, Users, UserCheck, GraduationCap, Percent, Smile } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Building2, Users, UserCheck, GraduationCap, Percent, Smile, Calendar } from 'lucide-react';
 import AppLogo from './app-logo';
 import { resolveUrl } from '@/lib/utils';
 
@@ -61,6 +61,11 @@ const karyawanNavItems: NavItem[] = [
         title: 'Kepala Unit',
         href: '/users?role=kepala_unit',
         icon: UserCheck,
+    },
+    {
+        title: 'Kehadiran',
+        href: '/kehadiran',
+        icon: Calendar,
     },
 ];
 
