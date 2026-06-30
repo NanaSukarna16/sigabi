@@ -16,7 +16,7 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Building2 } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Building2, Users, UserCheck } from 'lucide-react';
 import AppLogo from './app-logo';
 import { resolveUrl } from '@/lib/utils';
 
@@ -33,6 +33,19 @@ const masterNavItems: NavItem[] = [
         title: 'Unit biMBA',
         href: '/units',
         icon: Building2,
+    },
+];
+
+const karyawanNavItems: NavItem[] = [
+    {
+        title: 'Guru',
+        href: '/users?role=guru',
+        icon: Users,
+    },
+    {
+        title: 'Kepala Unit',
+        href: '/users?role=kepala_unit',
+        icon: UserCheck,
     },
 ];
 
@@ -67,7 +80,27 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain items={mainNavItems} />
-                
+
+                <SidebarGroup className="px-2 py-2">
+                    <SidebarGroupLabel>Karyawan</SidebarGroupLabel>
+                    <SidebarMenu>
+                        {karyawanNavItems.map((item) => (
+                            <SidebarMenuItem key={item.title}>
+                                <SidebarMenuButton
+                                    asChild
+                                    isActive={page.url === resolveUrl(item.href)}
+                                    tooltip={{ children: item.title }}
+                                >
+                                    <Link href={item.href} prefetch>
+                                        {item.icon && <item.icon />}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        ))}
+                    </SidebarMenu>
+                </SidebarGroup>
+
                 <SidebarGroup className="px-2 py-2">
                     <SidebarGroupLabel>Master Data</SidebarGroupLabel>
                     <SidebarMenu>
@@ -87,6 +120,8 @@ export function AppSidebar() {
                         ))}
                     </SidebarMenu>
                 </SidebarGroup>
+
+
             </SidebarContent>
 
             <SidebarFooter>

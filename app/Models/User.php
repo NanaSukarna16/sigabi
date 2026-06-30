@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -22,6 +24,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'unit_id',
+        'no_hp',
+        'alamat',
+        'role',
+        'gaji_pokok',
+        'tunjangan_kesehatan',
+        'tunjangan_transport',
+        'tunjangan_kerajinan',
+        'status',
     ];
 
     /**
@@ -47,6 +58,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'gaji_pokok' => 'decimal:2',
+            'tunjangan_kesehatan' => 'decimal:2',
+            'tunjangan_transport' => 'decimal:2',
+            'tunjangan_kerajinan' => 'decimal:2',
         ];
+    }
+
+    public function unit(): BelongsTo
+    {
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
+
+    public function murid(): HasMany
+    {
+        return $this->hasMany(Murid::class, 'user_id');
+    }
+
+    public function kehadiran(): HasMany
+    {
+        return $this->hasMany(Kehadiran::class, 'user_id');
+    }
+
+    public function penggajian(): HasMany
+    {
+        return $this->hasMany(Penggajian::class, 'user_id');
     }
 }
