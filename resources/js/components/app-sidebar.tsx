@@ -16,7 +16,7 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Building2, Users, UserCheck, GraduationCap, Percent } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Building2, Users, UserCheck, GraduationCap, Percent, Smile } from 'lucide-react';
 import AppLogo from './app-logo';
 import { resolveUrl } from '@/lib/utils';
 
@@ -43,6 +43,11 @@ const masterNavItems: NavItem[] = [
         title: 'Aturan Potongan',
         href: '/aturan-potongan',
         icon: Percent,
+    },
+    {
+        title: 'Murid biMBA',
+        href: '/murid',
+        icon: Smile,
     },
 ];
 
