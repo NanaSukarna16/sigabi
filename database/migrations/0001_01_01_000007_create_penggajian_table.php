@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('gaji_progress', 12, 2)->default(0);
             $table->decimal('total_potongan', 12, 2)->default(0);
             $table->decimal('total_gaji', 12, 2);
+            $table->string('status', 20)->default('draft');
             $table->timestamps();
 
             $table->unique(['user_id', 'bulan', 'tahun']);

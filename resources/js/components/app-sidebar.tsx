@@ -16,7 +16,7 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Building2, Users, UserCheck, GraduationCap, Percent, Smile, Calendar } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Building2, Users, UserCheck, GraduationCap, Percent, Smile, Calendar, Wallet, Calculator, Coins, DollarSign } from 'lucide-react';
 import AppLogo from './app-logo';
 import { resolveUrl } from '@/lib/utils';
 
@@ -40,14 +40,24 @@ const masterNavItems: NavItem[] = [
         icon: GraduationCap,
     },
     {
+        title: 'Murid biMBA',
+        href: '/murid',
+        icon: Smile,
+    },
+    {
         title: 'Aturan Potongan',
         href: '/aturan-potongan',
         icon: Percent,
     },
     {
-        title: 'Murid biMBA',
-        href: '/murid',
-        icon: Smile,
+        title: 'Konversi Poin',
+        href: '/aturan-konversi-poin',
+        icon: Coins,
+    },
+    {
+        title: 'Tarif Flat',
+        href: '/aturan-tarif-flat',
+        icon: DollarSign,
     },
 ];
 
@@ -66,6 +76,18 @@ const karyawanNavItems: NavItem[] = [
         title: 'Kehadiran',
         href: '/kehadiran',
         icon: Calendar,
+    },
+];
+const penggajianNavItems: NavItem[] = [
+    {
+        title: 'Hitung Gaji',
+        href: '/penggajian/calculate',
+        icon: Calculator,
+    },
+    {
+        title: 'Riwayat Gaji',
+        href: '/penggajian',
+        icon: Wallet,
     },
 ];
 
@@ -105,6 +127,26 @@ export function AppSidebar() {
                     <SidebarGroupLabel>Karyawan</SidebarGroupLabel>
                     <SidebarMenu>
                         {karyawanNavItems.map((item) => (
+                            <SidebarMenuItem key={item.title}>
+                                <SidebarMenuButton
+                                    asChild
+                                    isActive={page.url === resolveUrl(item.href)}
+                                    tooltip={{ children: item.title }}
+                                >
+                                    <Link href={item.href} prefetch>
+                                        {item.icon && <item.icon />}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        ))}
+                    </SidebarMenu>
+                </SidebarGroup>
+
+                <SidebarGroup className="px-2 py-2">
+                    <SidebarGroupLabel>Penggajian</SidebarGroupLabel>
+                    <SidebarMenu>
+                        {penggajianNavItems.map((item) => (
                             <SidebarMenuItem key={item.title}>
                                 <SidebarMenuButton
                                     asChild

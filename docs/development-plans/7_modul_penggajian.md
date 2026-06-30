@@ -1,31 +1,29 @@
-# Rencana Pengembangan: Modul Penggajian (Core)
+# Rencana Pengembangan: Modul Penggajian (Core) [SELESAI]
 
-Modul core untuk memproses perhitungan gaji kotor, potongan ketidakhadiran, insentif poin progress (dari murid reguler `S3-S6`, `K1-K2` terkonversi berdasarkan rentang/range), tarif flat murid khusus (`dhuafa`, `trial`, `baru`), hingga mencetak slip gaji bulanan.
+Modul core untuk memproses perhitungan gaji kotor, potongan ketidakhadiran, insentif poin progress (dari murid reguler `S3-S6`, `K1-K2` terkonversi berdasarkan rentang/range), tarif flat murid khusus (`dhuafa`, `trial`, `baru`), hingga mencetak slip gaji bulanan. Seluruh komponen fungsional telah selesai diimplementasikan.
 
-## Komponen yang Perlu Dibuat / Diubah:
+## Komponen yang Telah Dibuat:
 
-### 1. Models:
+### 1. Models: [SELESAI]
 - **`App\Models\Penggajian.php`**: Menyimpan total gaji, potongan, dan tunjangan per bulan.
 - **`App\Models\DetailProgress.php`**: Mencatat nominal rupiah yang didapatkan dari murid reguler (poin konversi) dan murid tarif khusus.
 - **`App\Models\DetailPotongan.php`**: Mencatat rincian potongan.
 - **`App\Models\AturanKonversiPoin.php`**: Menyimpan konfigurasi konversi rentang poin bulanan ke nominal rupiah.
 - **`App\Models\AturanTarifFlat.php`**: Menyimpan konfigurasi nominal tarif flat jenis murid khusus.
 
-### 2. Controller: `App\Http\Controllers\PenggajianController.php`
-- **Metode**:
+### 2. Controllers: [SELESAI]
+- **`App\Http\Controllers\AturanKonversiPoinController.php`**: CRUD range poin ke nominal insentif berdasarkan role.
+- **`App\Http\Controllers\AturanTarifFlatController.php`**: CRUD tarif flat murid khusus (`dhuafa`, `trial`, `baru`).
+- **`App\Http\Controllers\PenggajianController.php`**:
   - `index()` : Riwayat penggajian bulanan
-  - `calculate(Request $request)` : Menghitung gaji otomatis:
-    1. Hitung total poin murid reguler guru, lalu cari nominal rupiahnya berdasarkan rentang poin di tabel `aturan_konversi_poin` untuk role guru/kepala unit tersebut.
-    2. Hitung jumlah murid dhuafa, trial, baru, lalu kalikan masing-masing dengan tarif flat dari tabel `aturan_tarif_flat`.
-    3. Total insentif progress = nominal konversi rentang poin + nominal tarif flat murid khusus.
-    4. Gaji Bersih = Gaji Pokok + Tunjangan + Total Insentif Progress - Potongan.
+  - `create()` : Menampilkan preview kalkulasi gaji
+  - `store()` : Menyimpan hasil rekap gaji bulanan & rinciannya (detail_progress & detail_potongan) secara transaksional database.
 
-### 3. Route: `routes/web.php`
-- Resource route penggajian dan endpoint `/penggajian/calculate`.
-- Menambahkan route admin untuk mengatur `aturan-konversi-poin` dan `aturan-tarif-flat`.
+### 3. Routes: `routes/web.php` [SELESAI]
+- Resource route penggajian, aturan-konversi-poin, aturan-tarif-flat, dan endpoint `/penggajian/calculate`.
 
-### 4. React (Inertia) Pages:
-- `resources/js/pages/Penggajian/Index.tsx` (Daftar riwayat gaji bulanan)
-- `resources/js/pages/Penggajian/Calculate.tsx` (Wizard form proses hitung gaji)
-- `resources/js/pages/AturanKonversiPoin/Index.tsx` [NEW] (Halaman admin untuk mengatur rentang poin ke nominal rupiah)
-- `resources/js/pages/AturanTarifFlat/Index.tsx` [NEW] (Halaman admin untuk mengatur nominal flat dhuafa/trial/baru)
+### 4. React (Inertia) Pages: [SELESAI]
+- `resources/js/pages/Penggajian/Index.tsx` (Daftar riwayat gaji bulanan & cetak slip gaji)
+- `resources/js/pages/Penggajian/Calculate.tsx` (Kalkulator gaji otomatis dengan inspeksi rincian mendalam)
+- `resources/js/pages/AturanKonversiPoin/Index.tsx` (Pengaturan rentang poin ke nominal rupiah)
+- `resources/js/pages/AturanTarifFlat/Index.tsx` (Pengaturan nominal flat dhuafa/trial/baru)
