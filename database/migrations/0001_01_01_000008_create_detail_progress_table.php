@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('murid_id')->nullable()->constrained('murid')->onDelete('cascade');
             $table->foreignId('kategori_murid_id')->nullable()->constrained('kategori_murid')->onDelete('cascade');
             $table->decimal('poin_didapat', 8, 2);
+            $table->decimal('nominal_insentif', 12, 2)->default(0);
             $table->timestamp('created_at')->useCurrent();
         });
     }
