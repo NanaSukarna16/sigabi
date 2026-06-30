@@ -13,10 +13,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->foreignId('unit_id')->nullable()->constrained('units')->onDelete('set null');
+            $table->string('name'); // Keep Laravel default name for compatibility
+            $table->string('nama', 100); // biMBA specific nama field
+            $table->string('email', 100)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('no_hp', 20)->nullable();
+            $table->string('alamat', 255)->nullable();
+            $table->enum('role', ['superadmin', 'guru', 'kepala_unit']);
+            $table->decimal('gaji_pokok', 12, 2)->default(0);
+            $table->decimal('tunjangan_kesehatan', 12, 2)->default(0);
+            $table->decimal('tunjangan_transport', 12, 2)->default(0);
+            $table->decimal('tunjangan_kerajinan', 12, 2)->default(0);
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->rememberToken();
             $table->timestamps();
         });
